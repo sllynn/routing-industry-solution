@@ -1,12 +1,12 @@
 #!/bin/bash
 
-if [[ $DB_IS_DRIVER != "TRUE" ]]; then  
+if [[ $DB_IS_DRIVER != "TRUE" ]]; then
 
   echo "installing osrm backend server dependencies"
   sudo apt -qq install -y build-essential git cmake pkg-config libbz2-dev libxml2-dev libzip-dev libboost-all-dev lua5.2 liblua5.2-dev libtbb-dev
   
   echo "launching osrm backend server"
-  /dbfs/FileStore/osrm-backend/build/osrm-routed --algorithm=MLD /dbfs/FileStore/osrm-backend/maps/north-america/north-america-latest.osrm &
+  /dbfs/FileStore/osrm-backend/build/osrm-routed --algorithm=MLD /dbfs/FileStore/osrm-backend/maps/united-kingdom/united-kingdom-latest.osrm &
   
   echo "wait until osrm backend server becomes responsive"
   res=-1
@@ -17,7 +17,7 @@ if [[ $DB_IS_DRIVER != "TRUE" ]]; then
   do
 
     # test connectivity
-    curl --silent "http://127.0.0.1:5000/route/v1/driving/-74.005310,40.708750;-73.978691,40.744850"
+    curl --silent "http://127.0.0.1:5000/route/v1/driving/-0.00080678,51.47781737;0.07229157,51.26704151"
     res=$?
     
     # increment the loop counter

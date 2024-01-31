@@ -46,7 +46,7 @@
 # MAGIC
 # MAGIC # clone the osrm backend server repo
 # MAGIC rm -rf osrm-backend
-# MAGIC git clone --depth 1 -b v5.26.0 https://github.com/Project-OSRM/osrm-backend
+# MAGIC git clone --depth 1 -b v5.27.1 https://github.com/Project-OSRM/osrm-backend
 
 # COMMAND ----------
 
@@ -64,7 +64,7 @@
 # MAGIC mkdir -p build
 # MAGIC cd build
 # MAGIC
-# MAGIC cmake ..
+# MAGIC TBB_ROOT=/lib/x86_64-linux-gnu cmake ..
 # MAGIC cmake --build .
 # MAGIC sudo cmake --build . --target install
 
@@ -90,12 +90,12 @@
 # MAGIC %sh -e 
 # MAGIC
 # MAGIC # create clean folder to house downloaded map file
-# MAGIC rm -rf /srv/git/osrm-backend/maps/north-america
-# MAGIC mkdir -p /srv/git/osrm-backend/maps/north-america
+# MAGIC rm -rf /srv/git/osrm-backend/maps/united-kingdom
+# MAGIC mkdir -p /srv/git/osrm-backend/maps/united-kingdom
 # MAGIC
 # MAGIC # download map file to appropriate folder
-# MAGIC cd /srv/git/osrm-backend/maps/north-america
-# MAGIC wget --quiet https://download.geofabrik.de/north-america-latest.osm.pbf
+# MAGIC cd /srv/git/osrm-backend/maps/united-kingdom
+# MAGIC wget --quiet https://download.geofabrik.de/europe/united-kingdom-latest.osm.pbf
 # MAGIC
 # MAGIC # list folder contents
 # MAGIC ls -l .
@@ -115,10 +115,10 @@
 # MAGIC mkdir -p /srv/git/osrm-backend/logs
 # MAGIC
 # MAGIC # move to folder housing map file
-# MAGIC cd /srv/git/osrm-backend/maps/north-america
+# MAGIC cd /srv/git/osrm-backend/maps/united-kingdom
 # MAGIC
 # MAGIC # extract map file contents
-# MAGIC /srv/git/osrm-backend/build/osrm-extract north-america-latest.osm.pbf -p /srv/git/osrm-backend/profiles/car.lua > /srv/git/osrm-backend/logs/extract_log.txt
+# MAGIC /srv/git/osrm-backend/build/osrm-extract united-kingdom-latest.osm.pbf -p /srv/git/osrm-backend/profiles/car.lua > /srv/git/osrm-backend/logs/extract_log.txt
 # MAGIC
 # MAGIC # review output from extract command
 # MAGIC #echo '----------------------------------------'
@@ -133,7 +133,7 @@
 # COMMAND ----------
 
 # DBTITLE 1,Verify Map File Extraction
-# MAGIC %sh -e ls -l /srv/git/osrm-backend/maps/north-america
+# MAGIC %sh -e ls -l /srv/git/osrm-backend/maps/united-kingdom
 
 # COMMAND ----------
 
@@ -146,9 +146,9 @@
 # DBTITLE 1,Partition Extracted Map Files
 # MAGIC %sh -e 
 # MAGIC
-# MAGIC cd /srv/git/osrm-backend/maps/north-america
+# MAGIC cd /srv/git/osrm-backend/maps/united-kingdom
 # MAGIC
-# MAGIC /srv/git/osrm-backend/build/osrm-partition north-america-latest.osrm
+# MAGIC /srv/git/osrm-backend/build/osrm-partition united-kingdom-latest.osrm
 
 # COMMAND ----------
 
@@ -159,9 +159,9 @@
 # DBTITLE 1,Customize Extracted Map Files
 # MAGIC %sh -e 
 # MAGIC
-# MAGIC cd /srv/git/osrm-backend/maps/north-america
+# MAGIC cd /srv/git/osrm-backend/maps/united-kingdom
 # MAGIC
-# MAGIC /srv/git/osrm-backend/build/osrm-customize north-america-latest.osrm
+# MAGIC /srv/git/osrm-backend/build/osrm-customize united-kingdom-latest.osrm
 
 # COMMAND ----------
 
